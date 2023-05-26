@@ -10,11 +10,11 @@
         <label for="title">عنوان الكتاب:</label>
         <input type="text" id="title" name="title" required><br>
 
-        <label for="author">مؤلف الكتاب:</label>
+        <label for="author">اسم الكاتب:</label>
         <input type="text" id="author" name="author" required><br>
 
-        <label for="publisher">ناشر الكتاب:</label>
-        <input type="text" id="publisher" name="publisher" required><br>
+        <label for="year">سنة النشر:</label>
+        <input type="number" id="year" name="year" required><br>
 
         <button type="submit">إضافة الكتاب</button>
     </form>
@@ -27,21 +27,21 @@
                 var bookData = {
                     title: $('#title').val(),
                     author: $('#author').val(),
-                    publisher: $('#publisher').val()
+                    year: $('#year').val()
                 };
 
+                // إضافة الكتاب إلى ملف JSON على GitHub
                 $.ajax({
-                    type: 'POST',
-                    url: 'https://github.com/AljokerAlmsri/Nursing/blob/main/Data.json',
+                    type: 'PUT',
+                    url: 'https://api.github.com/repos/AljokerAlmsri/Nursing/contents/Data.json',
+                    headers: {
+                        Authorization: 'Token ghp_11AU4IPJA0SaHblSoO8IVN_PcHDtitT1Be6An7pzPa9ySUXshxUm0IzB4wqaeY4NubE6644QZAMvOq1nOZ'
+                    },
                     data: JSON.stringify({
-                        path: 'Data.json',
                         message: 'إضافة كتاب جديد',
                         content: btoa(JSON.stringify(bookData)),
-                        branch: 'main'
+                        sha: ''
                     }),
-                    beforeSend: function(xhr) {
-                         xhr.setRequestHeader('Authorization', 'Bearer ghp_11AU4IPJA0SaHblSoO8IVN_PcHDtitT1Be6An7pzPa9ySUXshxUm0IzB4wqaeY4NubE6644QZAMvOq1nOZ');
-                    },
                     success: function(response) {
                         console.log(response);
                         alert('تم إضافة الكتاب بنجاح.');
